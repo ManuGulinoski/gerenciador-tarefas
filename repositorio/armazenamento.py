@@ -30,8 +30,22 @@ def carregar():
     Dica: use os.path.exists, json.load(arquivo) e Disciplina.from_dict / Tarefa.from_dict.
     Abra com encoding="utf-8" por causa dos acentos.
     """
-    # TODO (Pessoa 2)
-    raise NotImplementedError
+    # Primeira vez rodando o app: o arquivo ainda nao existe 
+    if not os.path.exists(CAMINHO_DADOS):
+        return [],[]
+    # "r"=abrir para leitura; utf-8 para nao estragar os acentos 
+    with open(CAMINHO_DADOS, "r", encoding="utf-8") as arquivo:
+        conteudo = arquivo.read()
+    #arquivo existe, mas esta vazio 
+    if conteudo.strip() == "":
+        return [], []
+
+    dados = json.loads(conteudo)  # texto --> dicionario 
+
+    #cada dicionario vira um objeto 
+    disciplinas = [Disciplina.from_dict(d) for d in dados.get("disciplinas", [])]
+    tarefas = [Tarefa.from_dict(t) for t in dados.get("tarefas", [])]
+    return disciplinas, tarefas
 
 
 def salvar(disciplinas, tarefas):
@@ -40,5 +54,15 @@ def salvar(disciplinas, tarefas):
     Dica: json.dump(dados, arquivo, ensure_ascii=False, indent=2)
     Crie a pasta 'dados' se ela não existir (os.makedirs(..., exist_ok=True)).
     """
-    # TODO (Pessoa 2)
-    raise NotImplementedError
+    #cria a pasta "dados"
+    os.makedirs(os.path.dirname(CAMINHO_DADOS), exist_ok=True)
+
+    #cada objeto viraa um dicionario 
+
+    dados = {
+        "disciplinas": [d.to_dict() for d in disciplinas],
+        "tarefas": [t.to_dict() for t in tarefas],
+}
+#"w"= abrir para escrita
+    with open(CAMINHO_DADOS, "w", encoding="utf-8") as arquivo:
+        json.dump(dados,arquivo, ensure_ascii=False, indent=2)

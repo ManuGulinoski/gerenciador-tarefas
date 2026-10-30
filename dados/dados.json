@@ -1,4 +1,20 @@
 {
-  "disciplinas": [],
-  "tarefas": []
+  "disciplinas": [
+    {
+      "id": "89ff49bb-0da4-4238-8a33-c1d44f458605",
+      "nome": "Cálculo"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "ebec73f8-8283-4367-babd-17bccb43a054",
+      "nome": "Lista de exercícios",
+      "tipo": "Exercicio",
+      "prazo": "2026-11-05",
+      "disciplina_id": "89ff49bb-0da4-4238-8a33-c1d44f458605",
+      "status": "A fazer",
+      "descricao": "",
+      "cor": null
+    }
+  ]
 }
